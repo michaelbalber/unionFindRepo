@@ -1,0 +1,2 @@
+create a power set. 
+e.g. S={1,4} - > PowerSet(S) = { {},{1},{4},{1,4}}
