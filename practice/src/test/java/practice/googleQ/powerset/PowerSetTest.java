@@ -1,4 +1,4 @@
-package practice.googleQ.q2;
+package practice.googleQ.powerset;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import practice.googleQ.q2.PowerSet;
+import practice.googleQ.powerset.PowerSet;
 
 public class PowerSetTest {
 

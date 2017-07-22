@@ -1,4 +1,4 @@
-package practice.googleQ.q2;
+package practice.googleQ.powerset;
 
 public class ComparableWithEmpty<T> implements Comparable<T> {
 

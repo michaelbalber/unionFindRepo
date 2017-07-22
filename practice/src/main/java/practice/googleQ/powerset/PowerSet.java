@@ -1,4 +1,4 @@
-package practice.googleQ.q2;
+package practice.googleQ.powerset;
 
 import java.util.ArrayList;
 import java.util.Collections;
