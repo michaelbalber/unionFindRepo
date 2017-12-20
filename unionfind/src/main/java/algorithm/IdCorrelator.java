@@ -1,20 +1,22 @@
 package algorithm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class IdCorrelator {
+	//The union find set - has only the entety ids. one copy of each id.
 	private UnionFind<Integer> unionFind = new UnionFind<>(new HashSet<Integer>());
+	//The actual events. It is needed because the union find has only one copy of each id.
 	HashMap<Integer,List<Event>> eventsMap=new HashMap<>();
 		
 	
 	public void addEvent(Event event) {
 		unionFind.addElement(event.getId());
 		
+		//add to the map of events
 		List<Event> resEvents = eventsMap.get(event.getId());
 		if(resEvents==null || resEvents.isEmpty()) {
 			List<Event> list = new ArrayList<>();
@@ -26,6 +28,8 @@ public class IdCorrelator {
 	}
 	
 	public void addCorrelation(int id1, int id2) {
+		//it adds the two ids of the correlation even if not both of them already exists.
+		//it is possible because the real events are in the eventsMap
 		unionFind.addElement(id1);
 		unionFind.addElement(id2);
 		unionFind.union(id1, id2);
