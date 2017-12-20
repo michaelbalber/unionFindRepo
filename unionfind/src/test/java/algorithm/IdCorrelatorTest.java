@@ -75,8 +75,8 @@ class IdCorrelatorTest {
 	void testCorrelationBeforeEvent() {
 		IdCorrelator correlator = new IdCorrelator();
 		correlator.addEvent(new Event(1));
-		correlator.addEvent(new Event(2));
 		correlator.addCorrelation(1, 2);
+		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
 		correlator.addCorrelation(2, 3);
 		
@@ -84,4 +84,56 @@ class IdCorrelatorTest {
 		assertEquals(Arrays.asList(1,2,3), actual2.stream().map(x->x.getId()).collect(Collectors.toList()));		
 		
 	}
+	
+	@Test
+	void testTwoEventsSameId() {
+		IdCorrelator correlator = new IdCorrelator();
+		correlator.addCorrelation(1, 2);
+		correlator.addEvent(new Event(1));
+		correlator.addEvent(new Event(2));
+		correlator.addEvent(new Event(3));
+		correlator.addCorrelation(2, 3);
+		correlator.addEvent(new Event(3));
+
+		List<Event> actual2 = correlator.getGroupOfEvent(new Event(3));
+		assertEquals(Arrays.asList(1,2,3,3), actual2.stream().map(x->x.getId()).collect(Collectors.toList()));		
+		
+	}
+	
+	@Test
+	void testTwoEventsSameId2() {
+		IdCorrelator correlator = new IdCorrelator();
+		correlator.addEvent(new Event(1));
+		correlator.addEvent(new Event(2));
+		correlator.addEvent(new Event(3));
+		correlator.addCorrelation(2, 3);
+		correlator.addEvent(new Event(3));
+
+		List<Event> actual = correlator.getGroupOfEvent(new Event(1));
+		assertEquals(Arrays.asList(1), actual.stream().map(x->x.getId()).collect(Collectors.toList()));		
+
+		List<Event> actual2 = correlator.getGroupOfEvent(new Event(3));
+		assertEquals(Arrays.asList(2,3,3), actual2.stream().map(x->x.getId()).collect(Collectors.toList()));		
+		
+	}
+
+	@Test
+	void testAddNoExistsCorrelationId() {
+		IdCorrelator correlator = new IdCorrelator();
+		correlator.addEvent(new Event(1));
+		correlator.addEvent(new Event(2));
+		correlator.addEvent(new Event(3));
+		correlator.addCorrelation(2, 3);
+		correlator.addEvent(new Event(3));
+		correlator.addCorrelation(5, 4);
+
+
+		List<Event> actual = correlator.getGroupOfEvent(new Event(4));
+		assertTrue(actual.isEmpty());		
+
+		List<Event> actual2 = correlator.getGroupOfEvent(new Event(3));
+		assertEquals(Arrays.asList(2,3,3), actual2.stream().map(x->x.getId()).collect(Collectors.toList()));		
+		
+	}
+
 }

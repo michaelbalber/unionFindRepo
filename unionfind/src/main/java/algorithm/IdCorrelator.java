@@ -17,7 +17,9 @@ public class IdCorrelator {
 		
 		List<Event> resEvents = eventsMap.get(event.getId());
 		if(resEvents==null || resEvents.isEmpty()) {
-			eventsMap.put(event.getId(),Arrays.asList(event));
+			List<Event> list = new ArrayList<>();
+			list.add(event);
+			eventsMap.put(event.getId(),list);
 		}else {
 			resEvents.add(event);
 		}
@@ -34,7 +36,7 @@ public class IdCorrelator {
 		Set<Integer> allIds = unionFind.getGroupOfElement(unionFind.find(event.getId()));
 		for (Integer id : allIds) {
 			List<Event> eventList = eventsMap.get(id);
-			if(event!=null) {
+			if(eventList!=null) {
 				resEvents.addAll(eventList);
 			}
 		}
