@@ -63,6 +63,9 @@ class UnionFindTest {
 		
 		System.out.println(unionFind.toString());
 		
+		unionFind.deleteGroupofElement(new Event(3));
+		System.out.println(unionFind.toString());
+
 	
 	}
 }

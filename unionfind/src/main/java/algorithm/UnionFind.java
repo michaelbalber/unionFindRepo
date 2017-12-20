@@ -221,7 +221,18 @@ public class UnionFind<T>
 			}
 			setRep.get(representative).add(t);
 		}
-		return setRep.get(element);
+		return setRep.get(find(element));
+	}
+	
+	public Set<T> deleteGroupofElement(T element) {
+		Set<T> set = getGroupOfElement(element);
+		for (T t : set) {
+			parentMap.remove(t);
+			rankMap.remove(t);
+		}
+		count--;
+		return set;
+		
 	}
 }
 

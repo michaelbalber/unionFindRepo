@@ -34,6 +34,9 @@ public class IdCorrelator {
 	public List<Event> getGroupOfEvent(Event event){
 		ArrayList<Event> resEvents = new ArrayList<Event>();
 		Set<Integer> allIds = unionFind.getGroupOfElement(unionFind.find(event.getId()));
+		if(allIds==null) {
+			return resEvents;
+		}
 		for (Integer id : allIds) {
 			List<Event> eventList = eventsMap.get(id);
 			if(eventList!=null) {
@@ -41,5 +44,13 @@ public class IdCorrelator {
 			}
 		}
 		return resEvents;
+	}
+	
+	public Set<Integer> deleteGroupOfEvent(Event event){
+		Set<Integer> set = unionFind.deleteGroupofElement(event.getId());
+		for (Integer key : set) {
+			eventsMap.remove(key);
+		}
+		return set;
 	}
 }
