@@ -57,4 +57,8 @@ public class IdCorrelator {
 		}
 		return set;
 	}
+	
+	public void printUnionFind() {
+		System.out.println(unionFind.toString());
+	}
 }

@@ -2,13 +2,22 @@ package algorithm;
 
 public class Event {
 	int id;
-	
+	int correlationId=-1;
 	public Event(int n) {
 		id = n;
 	}
 	
+	public Event(int n, int correlation) {
+		id = n;
+		correlationId = correlation;
+	}
+	
 	public int getId() {
 		return id;
+	}
+	
+	public int getCorrelationId() {
+		return correlationId;
 	}
 	
 	public String toString() {

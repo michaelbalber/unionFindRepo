@@ -1,9 +1,11 @@
 package algorithm;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -213,15 +215,15 @@ public class UnionFind<T>
 	}
 	
 	public Set<T> getGroupOfElement(T element){
-		Map<T, Set<T>> setRep = new LinkedHashMap<>();
+		Set<T> resultSet = new HashSet<>();
+		T curr = find(element);
 		for (T t : parentMap.keySet()) {
 			T representative = find(t);
-			if (!setRep.containsKey(representative)) {
-				setRep.put(representative, new LinkedHashSet<>());
+			if(curr.equals(representative)) {
+				resultSet.add(t);
 			}
-			setRep.get(representative).add(t);
 		}
-		return setRep.get(find(element));
+		return resultSet;
 	}
 	
 	public Set<T> deleteGroupofElement(T element) {
