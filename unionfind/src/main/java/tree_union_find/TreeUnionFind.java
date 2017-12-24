@@ -1,6 +1,5 @@
-package algorithm;
+package tree_union_find;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -23,9 +22,9 @@ import java.util.stream.Collectors;
  * @author Tom Conerly
  * @since Feb 10, 2010
  */
-public class UnionFind<T>
+public class TreeUnionFind<T>
 {
-	private final Map<T, T> parentMap;
+	private final Map<T, TreeNode<T>> nodeMap;
 	private final Map<T, Integer> rankMap;
 	private int count; // number of components
 
@@ -34,13 +33,12 @@ public class UnionFind<T>
 	 * 
 	 * @param elements the initial elements to include (each element in a singleton set).
 	 */
-	public UnionFind(Set<T> elements)
+	public TreeUnionFind(Set<T> elements)
 	{
-		parentMap = new WeakHashMap<>();
+		nodeMap = new WeakHashMap<>();
 		rankMap = new WeakHashMap<>();
 		for (T element : elements) {
-			parentMap.put(element, element);
-			rankMap.put(element, 0);
+			addElement(element);
 		}
 		count = elements.size();
 	}
@@ -52,20 +50,22 @@ public class UnionFind<T>
 	 */
 	public void addElement(T element)
 	{
-		if (parentMap.containsKey(element))
+		if (isElementIncluded(element))
 			return;
-		parentMap.put(element, element);
+		nodeMap.put(element, new TreeNode<T>(element));
+		//setParent(element, element);
 		rankMap.put(element, 0);
 		count++;
 	}
 
+
 	/**
 	 * @return map from element to parent element
 	 */
-	protected Map<T, T> getParentMap()
-	{
-		return parentMap;
-	}
+//	protected Map<T, T> getParentMap()
+//	{
+//		return nodeMap;
+//	}
 
 	/**
 	 * @return map from element to rank
@@ -84,13 +84,13 @@ public class UnionFind<T>
 	 */
 	public T find(final T element)
 	{
-		if (!parentMap.containsKey(element)) {
+		if (!isElementIncluded(element)) {
 			return null;
 		}
 
 		T current = element;
 		while (true) {
-			T parent = parentMap.get(current);
+			T parent = getParentData(current);
 			if (parent.equals(current)) {
 				break;
 			}
@@ -100,8 +100,8 @@ public class UnionFind<T>
 
 		current = element;
 		while (!current.equals(root)) {
-			T parent = parentMap.get(current);
-			parentMap.put(current, root);
+			T parent = getParentData(current);
+			setParent(current, root);
 			current = parent;
 		}
 
@@ -118,7 +118,7 @@ public class UnionFind<T>
 	 */
 	public void union(T element1, T element2)
 	{
-		if (!parentMap.containsKey(element1) || !parentMap.containsKey(element2)) {
+		if (!isElementIncluded(element1) || !isElementIncluded(element2)) {
 			throw new IllegalArgumentException("elements must be contained in given set");
 		}
 
@@ -133,11 +133,11 @@ public class UnionFind<T>
 		int rank1 = rankMap.get(parent1);
 		int rank2 = rankMap.get(parent2);
 		if (rank1 > rank2) {
-			parentMap.put(parent2, parent1);
+			setParent(parent2, parent1);
 		} else if (rank1 < rank2) {
-			parentMap.put(parent1, parent2);
+			setParent(parent1, parent2);
 		} else {
-			parentMap.put(parent2, parent1);
+			setParent(parent2, parent1);
 			rankMap.put(parent1, rank1 + 1);
 		}
 		count--;
@@ -163,7 +163,7 @@ public class UnionFind<T>
 	 */
 	public int numberOfSets()
 	{
-		assert count >= 1 && count <= parentMap.keySet().size();
+		assert count >= 1 && count <= nodeMap.keySet().size();
 		return count;
 	}
 
@@ -174,7 +174,7 @@ public class UnionFind<T>
 	 */
 	public int size()
 	{
-		return parentMap.size();
+		return nodeMap.size();
 	}
 
 	/**
@@ -182,11 +182,11 @@ public class UnionFind<T>
 	 */
 	public void reset()
 	{
-		for (T element : parentMap.keySet()) {
-			parentMap.put(element, element);
+		for (T element : nodeMap.keySet()) {
+			setParent(element, element);
 			rankMap.put(element, 0);
 		}
-		count = parentMap.size();
+		count = nodeMap.size();
 	}
 
 	/**
@@ -198,7 +198,7 @@ public class UnionFind<T>
 	public String toString()
 	{
 		Map<T, Set<T>> setRep = new LinkedHashMap<>();
-		for (T t : parentMap.keySet()) {
+		for (T t : nodeMap.keySet()) {
 			T representative = find(t);
 			if (!setRep.containsKey(representative)) {
 				setRep.put(representative, new LinkedHashSet<>());
@@ -215,30 +215,42 @@ public class UnionFind<T>
 	}
 	
 	public Set<T> getGroupOfElement(T element){
-		Set<T> resultSet = new HashSet<>();
-		T curr = find(element);
-		if(curr==null) {
-			return resultSet;
-		}
-		for (T t : parentMap.keySet()) {
-			T representative = find(t);
-			if(curr.equals(representative)) {
-				resultSet.add(t);
-			}
-		}
-		return resultSet;
+		T root = find(element);
+		TreeNode<T> rootNode = nodeMap.get(root);
+		return rootNode!=null ? rootNode.getAllSubTree() : new HashSet<T>();
 	}
 	
 	public Set<T> deleteGroupofElement(T element) {
 		Set<T> set = getGroupOfElement(element);
 		for (T t : set) {
-			parentMap.remove(t);
+			nodeMap.remove(t);
 			rankMap.remove(t);
 		}
 		count--;
 		return set;
 		
 	}
+
+	private boolean isElementIncluded(T element) {
+		return nodeMap.containsKey(element);
+	}
+	
+
+	private T getParentData(T current) {
+		TreeNode<T> parent = nodeMap.get(current).getParent();
+		return parent!=null ? parent.getData() : current;
+	}
+
+	private void setParent(T current, final T root) {
+		TreeNode<T> currentNode = nodeMap.get(current);
+		TreeNode<T> rootNode = nodeMap.get(root);
+		TreeNode<T> parent = currentNode.getParent();
+		if(parent!=null) {
+			parent.removeChild(currentNode);
+		}
+		rootNode.addChild(currentNode);
+	}
+
 }
 
 //End UnionFind.java

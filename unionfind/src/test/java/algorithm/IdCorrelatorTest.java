@@ -11,11 +11,13 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import tree_union_find.IdCorrelatorTree;
+
 class IdCorrelatorTest {
 
 	@Test
 	void testBasicAddEvents() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -33,7 +35,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testBasicCorrelation() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -48,7 +50,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testTwoCorrelations() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -62,7 +64,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testTwoCorrelations2() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addCorrelation(1, 2);
@@ -76,7 +78,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testCorrelationBeforeEvent() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addCorrelation(1, 2);
 		correlator.addEvent(new Event(2));
@@ -90,7 +92,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testTwoEventsSameId() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addCorrelation(1, 2);
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
@@ -105,7 +107,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testTwoEventsSameId2() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -122,7 +124,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testAddNoExistsCorrelationId() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -141,7 +143,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testBasicDelete() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -157,7 +159,7 @@ class IdCorrelatorTest {
 	}
 	@Test
 	void testDeleteAndInsert() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -178,7 +180,7 @@ class IdCorrelatorTest {
 
 	@Test
 	void testDeleteAndInsert2() {
-		IdCorrelator correlator = new IdCorrelator();
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(2));
@@ -197,13 +199,13 @@ class IdCorrelatorTest {
 	}
 	@Test
 	void testLoad() throws InterruptedException{
-		int cycles = 50;
-		IdCorrelator correlator = new IdCorrelator();
+		int cycles = 50000;
+		IdCorrelatorTree correlator = new IdCorrelatorTree();
 		for(int j=0;j<cycles ; j++) {
 			ArrayList<Event> eventsList = new ArrayList<Event>();
 			ArrayList<Integer> deleteIdsList = new ArrayList<Integer>();
 			createLoadData(j,eventsList,deleteIdsList);
-			System.out.println("start Time: " + System.nanoTime());
+			//System.out.println("start Time: " + System.nanoTime());
 			long startNanoTime = System.nanoTime();
 			for (Event event : eventsList) {
 				if(event.getCorrelationId()==-1) {
@@ -212,22 +214,26 @@ class IdCorrelatorTest {
 					correlator.addCorrelation(event.getId(), event.getCorrelationId());
 				}
 			}
-			for (Integer id : deleteIdsList) {
-				correlator.deleteGroupOfEvent(new Event(id));
-			} 
-			double durtion = (System.nanoTime() - startNanoTime)/1000000.0;
-			System.out.println("duration millis: " + durtion);
-			correlator.printUnionFind();
-			Thread.sleep(1000);
+			if(correlator.getEventsMap().size() >1000000) {
+				for (Integer id : deleteIdsList) {
+					correlator.deleteGroupOfEvent(new Event(id));
+				} 
+				double durtion = (System.nanoTime() - startNanoTime)/1000000.0;
+				System.out.println("duration millis: " + durtion+" size: "+correlator.getEventsMap().size());
+			}
+//			correlator.printUnionFind();
+//			System.out.println(correlator.getEventsMap());
+			Thread.sleep(10);
 		}
 	}
 
 	private void createLoadData(int index, List<Event> eventlist, List<Integer> deleteIdsList){
 		int maxEvents = 10;
-		int maxTracks = 1500;
+		int maxTracks = 10000;
 		//ArrayList<Event> list = new ArrayList<>();
 		for(int i=0+maxTracks*index ; i<maxTracks*(index+1) ; i++) {
 			for(int j=0 ; j<maxEvents ; j++) {
+				eventlist.add(new Event(maxEvents*i+j));
 				eventlist.add(new Event(maxEvents*i+j));
 				if(j>0) {
 					eventlist.add(new Event(maxEvents*i+j-1,maxEvents*i+j));

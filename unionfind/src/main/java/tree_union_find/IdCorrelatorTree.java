@@ -1,4 +1,4 @@
-package algorithm;
+package tree_union_find;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class IdCorrelator {
+import algorithm.Event;
+
+public class IdCorrelatorTree {
 	//The union find set - has only the entety ids. one copy of each id.
-	private UnionFind<Integer> unionFind = new UnionFind<>(new HashSet<Integer>());
+	private TreeUnionFind<Integer> unionFind = new TreeUnionFind<>(new HashSet<Integer>());
 	//The actual events. It is needed because the union find has only one copy of each id.
 	HashMap<Integer,List<Event>> eventsMap=new HashMap<>();
 		
