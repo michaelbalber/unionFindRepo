@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import algorithm.Event;
+import algorithm.ICorrelator;
 
-public class IdCorrelatorTree {
+public class IdCorrelatorTree implements ICorrelator{
 	//The union find set - has only the entety ids. one copy of each id.
 	private TreeUnionFind<Integer> unionFind = new TreeUnionFind<>(new HashSet<Integer>());
 	//The actual events. It is needed because the union find has only one copy of each id.
@@ -70,5 +71,9 @@ public class IdCorrelatorTree {
 
 	public boolean contains(Event event) {
 		return unionFind.find(event.getId())!=null;
+	}
+	
+	public int getNumberOfUniqueIDs() {
+		return this.unionFind.getRankMap().size();
 	}
 }

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class IdCorrelator {
+public class IdCorrelator implements ICorrelator{
 	//The union find set - has only the entety ids. one copy of each id.
 	private UnionFind<Integer> unionFind = new UnionFind<>(new HashSet<Integer>());
 	//The actual events. It is needed because the union find has only one copy of each id.
@@ -68,5 +68,10 @@ public class IdCorrelator {
 
 	public boolean contains(Event event) {
 		return unionFind.find(event.getId())!=null;
+	}
+
+	@Override
+	public int getNumberOfUniqueIDs() {
+		return this.unionFind.getRankMap().size();
 	}
 }
