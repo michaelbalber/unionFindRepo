@@ -1,10 +1,19 @@
 package algorithm;
 
 public class Event {
-	int id;
-	int correlationId=-1;
+	private final int id;
+	private final int correlationId;
+	private long timestamp = System.nanoTime();
+	
+	
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	public Event(int n) {
 		id = n;
+		correlationId = -1;
 	}
 	
 	public Event(int n, int correlation) {
@@ -12,6 +21,10 @@ public class Event {
 		correlationId = correlation;
 	}
 	
+	public long getTimestamp() {
+		return timestamp;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -12,6 +12,11 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import actors.DeleteGroupRequest;
+import actors.IdCorrelatorManager;
+import actors.TracingActorSystem;
+import akka.actor.ActorRef;
+import akka.actor.ActorSelection;
 import tree_union_find.IdCorrelatorTree;
 
 class IdCorrelatorTest {
@@ -210,12 +215,12 @@ class IdCorrelatorTest {
 					correlator.addCorrelation(event.getId(), event.getCorrelationId());
 				}
 			}
-			if(correlator.getNumberOfUniqueIDs() >1000000) {
+			if(j >10) {
 				for (Integer id : deleteIdsList) {
 					correlator.deleteGroupOfEvent(new Event(id));
 				} 
 				double durtion = (System.nanoTime() - startNanoTime)/1000000.0;
-				System.out.println("duration millis: " + durtion+" size: "+correlator.getNumberOfUniqueIDs());
+				System.out.println("duration millis: " + durtion+" cycle: "+j);
 			}
 //			correlator.printUnionFind();
 //			System.out.println(correlator.getEventsMap());
@@ -223,7 +228,7 @@ class IdCorrelatorTest {
 		}
 	}
 
-	private void createLoadData(int index, List<Event> eventlist, List<Integer> deleteIdsList){
+	public static void createLoadData(int index, List<Event> eventlist, List<Integer> deleteIdsList){
 		int maxEvents = 10;
 		int maxTracks = 10000;
 		//ArrayList<Event> list = new ArrayList<>();
