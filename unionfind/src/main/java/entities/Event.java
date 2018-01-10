@@ -1,28 +1,44 @@
 package entities;
 
 public class Event {
+	private static final int NOT_CORRELATION_ID = -1;
 	private final int id;
 	private final int correlationId;
-	private long timestamp = System.nanoTime();
-	
+	private long creationTimestamp = System.nanoTime();
+	private EEventTimeLine eventTimeLine = EEventTimeLine.MIDDLE;
 	
 
-	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
-	}
+
+
 
 	public Event(int n) {
 		id = n;
-		correlationId = -1;
+		correlationId = NOT_CORRELATION_ID;
 	}
 	
 	public Event(int n, int correlation) {
 		id = n;
 		correlationId = correlation;
 	}
+
+	public void setcreationTimestamp(long timestamp) {
+		this.creationTimestamp = timestamp;
+	}
+	
+	public void setEventTimeLine(EEventTimeLine eventTimeLine) {
+		this.eventTimeLine = eventTimeLine;
+	}
+	
+	public EEventTimeLine getEventTimeLine() {
+		return eventTimeLine;
+	}
+
+	public boolean isCorrelation() {
+		return 	correlationId != NOT_CORRELATION_ID;
+	}
 	
 	public long getTimestamp() {
-		return timestamp;
+		return creationTimestamp;
 	}
 
 	public int getId() {

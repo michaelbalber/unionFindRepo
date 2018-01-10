@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -201,7 +202,8 @@ class IdCorrelatorTest {
 
 	}
 
-	@Test
+	//@Ignore
+	//@Test
 	void testLoad() throws InterruptedException{
 		int cycles = 50000;
 		for(int j=0;j<cycles ; j++) {

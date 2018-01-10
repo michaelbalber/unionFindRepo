@@ -23,7 +23,7 @@ class CorrelatorActorTest {
 			ArrayList<Integer> deleteIdsList = new ArrayList<Integer>();
 			IdCorrelatorTest.createLoadData(j,eventsList,deleteIdsList);
 			for (Event event : eventsList) {
-				event.setTimestamp(System.nanoTime());
+				event.setcreationTimestamp(System.nanoTime());
 				correlatorActor.tell(event,ActorRef.noSender());
 			}
 			if(j >20) {

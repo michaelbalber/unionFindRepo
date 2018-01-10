@@ -26,7 +26,7 @@ public class CorrelatorActor extends AbstractActor{
 
 	public void dealWithEvent(Event event) {
 	
-		if(event.getCorrelationId()!=-1) {
+		if(event.isCorrelation()) {
 			correlator.addCorrelation(event.getId(), event.getCorrelationId());
 		}else {
 			correlator.addEvent(event);
@@ -38,6 +38,11 @@ public class CorrelatorActor extends AbstractActor{
 		sampledLatency(event,"add");
 	}
 
+	public void dealWithDelete(DeleteGroupRequest deleteRequest) {
+		correlator.deleteGroupOfEvent(deleteRequest.getEvent());
+		sampledLatency(deleteRequest.getEvent(),"delete");
+	}
+
 	private void sampledLatency(Event event, String actionStr) {
 		if(!SHOULD_SAMPLE_LATENCY) {
 			return;
@@ -47,8 +52,4 @@ public class CorrelatorActor extends AbstractActor{
 			System.out.println(actionStr+" actor latency: "+duration);
 	}
 
-	public void dealWithDelete(DeleteGroupRequest deleteRequest) {
-		correlator.deleteGroupOfEvent(deleteRequest.getEvent());
-		sampledLatency(deleteRequest.getEvent(),"delete");
-	}
 }
