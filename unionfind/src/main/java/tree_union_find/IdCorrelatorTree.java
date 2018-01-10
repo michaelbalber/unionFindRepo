@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import actors.Event;
+import entities.Event;
 import regular_union_find.ICorrelator;
 
 public class IdCorrelatorTree implements ICorrelator{

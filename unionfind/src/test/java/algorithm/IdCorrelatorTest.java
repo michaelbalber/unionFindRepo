@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import actors.DeleteGroupRequest;
-import actors.Event;
 import actors.IdCorrelatorManager;
 import actors.TracingActorSystem;
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
+import entities.DeleteGroupRequest;
+import entities.Event;
 import regular_union_find.ICorrelator;
 import tree_union_find.IdCorrelatorTree;
 

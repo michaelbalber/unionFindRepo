@@ -1,4 +1,4 @@
-package actors;
+package entities;
 
 public class Event {
 	private final int id;

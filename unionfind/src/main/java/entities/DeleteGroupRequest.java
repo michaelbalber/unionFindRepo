@@ -1,4 +1,4 @@
-package actors;
+package entities;
 
 public class DeleteGroupRequest {
 	private Event event;

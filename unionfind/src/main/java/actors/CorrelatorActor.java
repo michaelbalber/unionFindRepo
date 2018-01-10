@@ -3,6 +3,9 @@ package actors;
 import java.util.List;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
+import entities.DeleteGroupRequest;
+import entities.Event;
+import entities.UpdateStatusRequest;
 import regular_union_find.ICorrelator;
 import tree_union_find.IdCorrelatorTree;
 

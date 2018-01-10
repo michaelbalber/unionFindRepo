@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import actors.DeleteGroupRequest;
-import actors.Event;
 import actors.IdCorrelatorManager;
 import actors.TracingActorSystem;
 import akka.actor.ActorRef;
+import entities.DeleteGroupRequest;
+import entities.Event;
 
 class CorrelatorActorTest {
 

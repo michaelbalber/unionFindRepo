@@ -1,4 +1,4 @@
-package actors;
+package entities;
 
 import java.util.List;
 

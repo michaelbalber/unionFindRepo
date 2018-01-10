@@ -3,7 +3,7 @@ package regular_union_find;
 import java.util.List;
 import java.util.Set;
 
-import actors.Event;
+import entities.Event;
 
 public interface ICorrelator {
 
