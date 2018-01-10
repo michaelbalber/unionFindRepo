@@ -1,7 +1,6 @@
 package actors;
 
 import java.util.List;
-
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import algorithm.Event;
@@ -12,7 +11,7 @@ public class CorrelatorActor extends AbstractActor{
 
 	private static final boolean SHOULD_SAMPLE_LATENCY = false;
 	private final ICorrelator correlator = new IdCorrelatorTree();
-	private final ActorRef statusUpdaterActor = TracingActorSystem.ACTOR_SYSTEM.getActorSystem().actorFor("user/StatusUpdaterActor");
+	private final ActorRef statusUpdaterActor = TracingActorSystem.ACTOR_SYSTEM.getActorRefByName("StatusUpdaterActor");
 
 
 	@Override
@@ -32,7 +31,7 @@ public class CorrelatorActor extends AbstractActor{
 		}
 		List<Event> groupOfEvent = correlator.getGroupOfEvent(event);
 		if(groupOfEvent!=null && groupOfEvent.size()>1) {
-			statusUpdaterActor.tell(new UpdateStatus(groupOfEvent), getSelf());
+			statusUpdaterActor.tell(new UpdateStatusRequest(groupOfEvent), getSelf());
 		}
 		sampledLatency(event,"add");
 	}
@@ -50,5 +49,4 @@ public class CorrelatorActor extends AbstractActor{
 		correlator.deleteGroupOfEvent(deleteRequest.getEvent());
 		sampledLatency(deleteRequest.getEvent(),"delete");
 	}
-
 }

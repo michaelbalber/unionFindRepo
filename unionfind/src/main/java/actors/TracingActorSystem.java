@@ -1,5 +1,6 @@
 package actors;
 
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 
 public enum TracingActorSystem {
@@ -12,5 +13,9 @@ public enum TracingActorSystem {
 	
 	public ActorSystem getActorSystem() {
 		return actorStsyem;
+	}
+	
+	public ActorRef getActorRefByName(String actorName) {
+		return getActorSystem().actorFor("user/"+actorName);
 	}
 }

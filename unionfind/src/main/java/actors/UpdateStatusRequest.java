@@ -4,9 +4,9 @@ import java.util.List;
 
 import algorithm.Event;
 
-public class UpdateStatus {
+public class UpdateStatusRequest {
 	private final List<Event>  eventList;
-	public UpdateStatus(List<Event>  events) {
+	public UpdateStatusRequest(List<Event>  events) {
 		eventList = events;
 	}
 	

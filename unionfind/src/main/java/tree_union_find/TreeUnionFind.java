@@ -53,7 +53,6 @@ public class TreeUnionFind<T>
 		if (isElementIncluded(element))
 			return;
 		nodeMap.put(element, new TreeNode<T>(element));
-		//setParent(element, element);
 		rankMap.put(element, 0);
 		count++;
 	}

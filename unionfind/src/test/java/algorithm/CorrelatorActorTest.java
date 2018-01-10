@@ -15,7 +15,7 @@ class CorrelatorActorTest {
 	void testLoad() throws InterruptedException{
 		int cycles = 50000;
 		IdCorrelatorManager.initActors();
-		ActorRef correlatorActor = TracingActorSystem.ACTOR_SYSTEM.getActorSystem().actorFor("user/CorrelatorActor");
+		ActorRef correlatorActor = TracingActorSystem.ACTOR_SYSTEM.getActorRefByName("CorrelatorActor");
 		for(int j=0;j<cycles ; j++) {
 			long startNanoTime = System.nanoTime();
 			ArrayList<Event> eventsList = new ArrayList<Event>();

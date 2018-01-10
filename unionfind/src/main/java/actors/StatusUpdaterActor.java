@@ -2,7 +2,6 @@ package actors;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import akka.actor.AbstractActor;
 import algorithm.Event;
@@ -14,11 +13,11 @@ public class StatusUpdaterActor extends AbstractActor{
 	@Override
 	public Receive createReceive() {
 		return receiveBuilder()
-				.match(UpdateStatus.class,this::updateStatus)
+				.match(UpdateStatusRequest.class,this::updateStatus)
 				.build();
 	}
 	
-	public void updateStatus(UpdateStatus update) {
+	public void updateStatus(UpdateStatusRequest update) {
 		List<Event> events = update.getEventList();
 		List<Long> sorted = events.stream().map(x->x.getTimestamp()).sorted().collect(Collectors.toList());
 		long delta = sorted.get(sorted.size()-1)- sorted.get(0);
@@ -29,6 +28,4 @@ public class StatusUpdaterActor extends AbstractActor{
 			System.out.println("updateStatus: " + delta);
 
 	}
-	
-
 }
