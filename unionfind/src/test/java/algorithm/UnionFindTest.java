@@ -6,6 +6,7 @@ import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 
 import actors.Event;
+import regular_union_find.UnionFind;
 
 class UnionFindTest {
 

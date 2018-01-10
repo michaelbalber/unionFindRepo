@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import actors.Event;
-import algorithm.ICorrelator;
+import regular_union_find.ICorrelator;
 
 public class IdCorrelatorTree implements ICorrelator{
 	//The union find set - has only the entety ids. one copy of each id.

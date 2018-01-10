@@ -3,7 +3,7 @@ package actors;
 import java.util.List;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
-import algorithm.ICorrelator;
+import regular_union_find.ICorrelator;
 import tree_union_find.IdCorrelatorTree;
 
 public class CorrelatorActor extends AbstractActor{

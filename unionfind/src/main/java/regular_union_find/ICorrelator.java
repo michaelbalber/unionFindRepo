@@ -1,4 +1,4 @@
-package algorithm;
+package regular_union_find;
 
 import java.util.List;
 import java.util.Set;

@@ -18,6 +18,7 @@ import actors.IdCorrelatorManager;
 import actors.TracingActorSystem;
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
+import regular_union_find.ICorrelator;
 import tree_union_find.IdCorrelatorTree;
 
 class IdCorrelatorTest {
