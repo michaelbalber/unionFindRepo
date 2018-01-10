@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import algorithm.Event;
+import actors.Event;
 import algorithm.ICorrelator;
 
 public class IdCorrelatorTree implements ICorrelator{

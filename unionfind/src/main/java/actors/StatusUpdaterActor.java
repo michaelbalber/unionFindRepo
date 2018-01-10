@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import akka.actor.AbstractActor;
-import algorithm.Event;
 
 public class StatusUpdaterActor extends AbstractActor{
 

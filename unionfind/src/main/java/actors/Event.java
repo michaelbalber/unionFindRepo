@@ -1,4 +1,4 @@
-package algorithm;
+package actors;
 
 public class Event {
 	private final int id;

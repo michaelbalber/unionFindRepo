@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import actors.Event;
+
 public class IdCorrelator implements ICorrelator{
 	//The union find set - has only the entety ids. one copy of each id.
 	private UnionFind<Integer> unionFind = new UnionFind<>(new HashSet<Integer>());

@@ -5,6 +5,8 @@ import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 
+import actors.Event;
+
 class UnionFindTest {
 
 	@Test

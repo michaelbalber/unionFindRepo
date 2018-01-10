@@ -3,6 +3,8 @@ package algorithm;
 import java.util.List;
 import java.util.Set;
 
+import actors.Event;
+
 public interface ICorrelator {
 
 	void addEvent(Event event);

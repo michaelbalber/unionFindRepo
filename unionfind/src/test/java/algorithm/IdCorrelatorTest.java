@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import actors.DeleteGroupRequest;
+import actors.Event;
 import actors.IdCorrelatorManager;
 import actors.TracingActorSystem;
 import akka.actor.ActorRef;
