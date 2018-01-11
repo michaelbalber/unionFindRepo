@@ -47,7 +47,7 @@ public class CorrelatorActor extends AbstractActor{
 		if(!SHOULD_SAMPLE_LATENCY) {
 			return;
 		}
-		double duration = (System.nanoTime() - event.getTimestamp())/1000000.0;
+		double duration = (System.nanoTime() - event.getCreationTimestamp())/1000000.0;
 		if(System.nanoTime()%10000==1)
 			System.out.println(actionStr+" actor latency: "+duration);
 	}

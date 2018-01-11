@@ -37,7 +37,7 @@ public class Event {
 		return 	correlationId != NOT_CORRELATION_ID;
 	}
 	
-	public long getTimestamp() {
+	public long getCreationTimestamp() {
 		return creationTimestamp;
 	}
 
