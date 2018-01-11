@@ -20,7 +20,7 @@ public class StatusUpdaterActor extends AbstractActor{
 	
 	public void updateStatus(UpdateStatusRequest update) {
 		List<Event> events = update.getEventList();
-		List<Long> sorted = events.stream().map(x->x.getTimestamp()).sorted().collect(Collectors.toList());
+		List<Long> sorted = events.stream().map(x->x.getCreationTimestamp()).sorted().collect(Collectors.toList());
 		long delta = sorted.get(sorted.size()-1)- sorted.get(0);
 		if(!SHOULD_SAMPLE_LATENCY) {
 			return;
