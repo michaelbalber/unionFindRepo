@@ -2,20 +2,19 @@ package algorithm;
 
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import actors.IdCorrelatorManager;
 import actors.TracingActorSystem;
 import akka.actor.ActorRef;
 import entities.DeleteGroupRequest;
 import entities.Event;
 
-class CorrelatorActorTest {
+public class CorrelatorActorTest {
 
 	@Test
-	void testLoad() throws InterruptedException{
+	public void testLoad() throws InterruptedException{
 		int cycles = 50000;
-		IdCorrelatorManager.initActors();
+		TracingActorSystem.initActors();
 		ActorRef correlatorActor = TracingActorSystem.ACTOR_SYSTEM.getActorRefByName("CorrelatorActor");
 		for(int j=0;j<cycles ; j++) {
 			long startNanoTime = System.nanoTime();

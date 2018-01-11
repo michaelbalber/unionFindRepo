@@ -3,15 +3,15 @@ package algorithm;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import entities.Event;
 import regular_union_find.UnionFind;
 
-class UnionFindTest {
+public class UnionFindTest {
 
 	@Test
-	void test() {
+	public void test() {
 		HashSet<Integer> set = new HashSet<Integer>();
 		set.addAll(Arrays.asList(1,2,3,4,5,6));
 		
@@ -29,7 +29,7 @@ class UnionFindTest {
 	}
 	
 	@Test
-	void test2() {
+	public void test2() {
 		HashSet<Event> set = new HashSet<Event>();
 		set.addAll(Arrays.asList(new Event(1),new Event(2),new Event(3)
 				,new Event(4),new Event(5),new Event(6)));
@@ -48,7 +48,7 @@ class UnionFindTest {
 	}
 
 	@Test
-	void addEventstest() {
+	public void addEventstest() {
 		HashSet<Event> set = new HashSet<Event>();
 		set.addAll(Arrays.asList(new Event(1),new Event(2),new Event(3)
 				,new Event(4),new Event(6)));

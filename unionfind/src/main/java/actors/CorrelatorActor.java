@@ -24,6 +24,10 @@ public class CorrelatorActor extends AbstractActor{
 				.build();
 	}
 
+	/**
+	 *  @param event - event can be correlation or an event. 
+	 *  if we want correlation to be also an event we should change the function.
+	 */
 	public void dealWithEvent(Event event) {
 	
 		if(event.isCorrelation()) {

@@ -65,15 +65,4 @@ public class IdCorrelatorTree implements ICorrelator{
 		return set;
 	}
 	
-	public void printUnionFind() {
-		System.out.println(unionFind.toString());
-	}
-
-	public boolean contains(Event event) {
-		return unionFind.find(event.getId())!=null;
-	}
-	
-	public int getNumberOfUniqueIDs() {
-		return this.unionFind.getRankMap().size();
-	}
 }

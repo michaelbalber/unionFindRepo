@@ -1,7 +1,6 @@
 package algorithm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,29 +8,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Ignore;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import actors.IdCorrelatorManager;
-import actors.TracingActorSystem;
-import akka.actor.ActorRef;
-import akka.actor.ActorSelection;
-import entities.DeleteGroupRequest;
 import entities.Event;
 import regular_union_find.ICorrelator;
 import tree_union_find.IdCorrelatorTree;
 
-class IdCorrelatorTest {
+public class IdCorrelatorTest {
 
 	private ICorrelator correlator;
 
-	@BeforeEach
+	@Before
 	public void before() {
 		correlator = new IdCorrelatorTree();
 	}
 	@Test
-	void testBasicAddEvents() {
+	public void testBasicAddEvents() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -48,7 +41,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testBasicCorrelation() {
+	public void testBasicCorrelation() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -62,7 +55,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testTwoCorrelations() {
+	public void testTwoCorrelations() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -75,7 +68,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testTwoCorrelations2() {
+	public void testTwoCorrelations2() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addCorrelation(1, 2);
@@ -88,7 +81,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testCorrelationBeforeEvent() {
+	public void testCorrelationBeforeEvent() {
 		correlator.addEvent(new Event(1));
 		correlator.addCorrelation(1, 2);
 		correlator.addEvent(new Event(2));
@@ -101,7 +94,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testTwoEventsSameId() {
+	public void testTwoEventsSameId() {
 		correlator.addCorrelation(1, 2);
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
@@ -115,7 +108,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testTwoEventsSameId2() {
+	public void testTwoEventsSameId2() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -131,7 +124,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testAddNoExistsCorrelationId() {
+	public void testAddNoExistsCorrelationId() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -149,7 +142,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testBasicDelete() {
+	public void testBasicDelete() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -164,7 +157,7 @@ class IdCorrelatorTest {
 
 	}
 	//@Test
-	void testDeleteAndInsert() {
+	public void testDeleteAndInsert() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(3));
@@ -184,7 +177,7 @@ class IdCorrelatorTest {
 	}
 
 	@Test
-	void testDeleteAndInsert2() {
+	public void testDeleteAndInsert2() {
 		correlator.addEvent(new Event(1));
 		correlator.addEvent(new Event(2));
 		correlator.addEvent(new Event(2));
@@ -204,7 +197,7 @@ class IdCorrelatorTest {
 
 	//@Ignore
 	//@Test
-	void testLoad() throws InterruptedException{
+	public void testLoad() throws InterruptedException{
 		int cycles = 50000;
 		for(int j=0;j<cycles ; j++) {
 			ArrayList<Event> eventsList = new ArrayList<Event>();

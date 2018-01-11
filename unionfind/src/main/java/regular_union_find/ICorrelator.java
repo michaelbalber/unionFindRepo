@@ -15,6 +15,4 @@ public interface ICorrelator {
 
 	Set<Integer> deleteGroupOfEvent(Event event);
 
-	int getNumberOfUniqueIDs();
-
 }
