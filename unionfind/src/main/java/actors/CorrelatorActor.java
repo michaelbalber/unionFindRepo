@@ -30,10 +30,9 @@ public class CorrelatorActor extends AbstractActor{
 	 */
 	public void dealWithEvent(Event event) {
 	
+		correlator.addEvent(event);
 		if(event.isCorrelation()) {
 			correlator.addCorrelation(event.getId(), event.getCorrelationId());
-		}else {
-			correlator.addEvent(event);
 		}
 		List<Event> groupOfEvent = correlator.getGroupOfEvent(event);
 		if(groupOfEvent!=null && groupOfEvent.size()>1) {
