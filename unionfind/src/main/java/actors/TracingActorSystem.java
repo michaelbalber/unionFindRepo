@@ -6,25 +6,29 @@ import akka.actor.Props;
 
 public enum TracingActorSystem {
 	ACTOR_SYSTEM;
-	private ActorSystem actorStsyem;
+	private ActorSystem actorSystem;
 
 	private TracingActorSystem() {
-		actorStsyem = ActorSystem.create("tracingSystem");
+		actorSystem = ActorSystem.create("tracingSystem");
 	}
 	
 	public ActorSystem getActorSystem() {
-		return actorStsyem;
+		return actorSystem;
 	}
 	
 	public ActorRef getActorRefByName(String actorName) {
 		return getActorSystem().actorFor("user/"+actorName);
 	}
 	
-	public static void initActors() {
-		ActorSystem system = ACTOR_SYSTEM.getActorSystem();
+	public void initActors() {
 
-	    system.actorOf(Props.create(CorrelatorActor.class), "CorrelatorActor");
-	    system.actorOf(Props.create(StatusUpdaterActor.class), "StatusUpdaterActor");	    
+	    actorSystem.actorOf(Props.create(CorrelatorActor.class), "CorrelatorActor");
+	    actorSystem.actorOf(Props.create(StatusUpdaterActor.class), "StatusUpdaterActor");	    
 	    
+	}
+	
+	public void uninitActors() {
+		getActorRefByName("CorrelatorActor").tell(akka.actor.PoisonPill.getInstance(), ActorRef.noSender());
+		getActorRefByName("StatusUpdaterActor").tell(akka.actor.PoisonPill.getInstance(), ActorRef.noSender());
 	}
 }

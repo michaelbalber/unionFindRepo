@@ -22,7 +22,9 @@ public class IdCorrelatorTree implements ICorrelator{
 
 	public void addEvent(Event event) {
 		unionFind.addElement(event.getId());
-		
+		if(event.isCorrelation()) {
+			addCorrelation(event.getId(), event.getCorrelationId());
+		}
 		//add to the map of events
 		List<Event> resEvents = eventsMap.get(event.getId());
 		if(resEvents==null || resEvents.isEmpty()) {
@@ -37,6 +39,7 @@ public class IdCorrelatorTree implements ICorrelator{
 	public void addCorrelation(int id1, int id2) {
 		//it adds the two ids of the correlation even if not both of them already exists.
 		//it is possible because the real events are in the eventsMap
+		
 		unionFind.addElement(id1);
 		unionFind.addElement(id2);
 		unionFind.union(id1, id2);
